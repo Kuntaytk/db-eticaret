@@ -1,0 +1,972 @@
+USE [master]
+GO
+/****** Nesnesi: Database [SatisVT] Betik Tarihi: 15.06.2026 17:52:22 ******/
+CREATE DATABASE [SatisVT]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'SatisVT', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL17.MSSQLSERVER\MSSQL\DATA\SatisVT.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'SatisVT_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL17.MSSQLSERVER\MSSQL\DATA\SatisVT_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [SatisVT] SET COMPATIBILITY_LEVEL = 170
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [SatisVT].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [SatisVT] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [SatisVT] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [SatisVT] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [SatisVT] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [SatisVT] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [SatisVT] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [SatisVT] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [SatisVT] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [SatisVT] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [SatisVT] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [SatisVT] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [SatisVT] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [SatisVT] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [SatisVT] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [SatisVT] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [SatisVT] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [SatisVT] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [SatisVT] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [SatisVT] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [SatisVT] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [SatisVT] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [SatisVT] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [SatisVT] SET RECOVERY FULL 
+GO
+ALTER DATABASE [SatisVT] SET  MULTI_USER 
+GO
+ALTER DATABASE [SatisVT] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [SatisVT] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [SatisVT] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [SatisVT] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [SatisVT] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [SatisVT] SET OPTIMIZED_LOCKING = OFF 
+GO
+ALTER DATABASE [SatisVT] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [SatisVT] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [SatisVT] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [SatisVT]
+GO
+/****** Nesnesi: Table [dbo].[TBLKATEGORI] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLKATEGORI](
+	[KATEGORIID] [tinyint] IDENTITY(1,1) NOT NULL,
+	[KATEGORIAD] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[KATEGORIID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Nesnesi: View [dbo].[TEST1] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[TEST1]
+AS
+SELECT KATEGORIID, KATEGORIAD
+FROM     dbo.TBLKATEGORI
+WHERE  (KATEGORIID <= 2)
+GO
+/****** Nesnesi: Table [dbo].[TBLURUNLER] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLURUNLER](
+	[URUNID] [int] IDENTITY(1,1) NOT NULL,
+	[URUNAD] [varchar](50) NULL,
+	[URUNMARKA] [varchar](50) NULL,
+	[KATEGORI] [tinyint] NULL,
+	[URUNALISFIYAT] [decimal](18, 2) NULL,
+	[URUNSATISFIYAT] [decimal](18, 2) NULL,
+	[URUNSTOK] [smallint] NULL,
+	[URUNDURUM] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[URUNID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Nesnesi: View [dbo].[TEST2] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[TEST2]
+AS
+SELECT dbo.TBLURUNLER.URUNID, dbo.TBLURUNLER.URUNAD, dbo.TBLURUNLER.URUNMARKA, dbo.TBLKATEGORI.KATEGORIAD
+FROM     dbo.TBLURUNLER INNER JOIN
+                  dbo.TBLKATEGORI ON dbo.TBLURUNLER.KATEGORI = dbo.TBLKATEGORI.KATEGORIID
+WHERE  (dbo.TBLURUNLER.URUNAD LIKE '%a%')
+GO
+/****** Nesnesi: Table [dbo].[TBLPERSONEL] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLPERSONEL](
+	[PERSONELID] [smallint] IDENTITY(1,1) NOT NULL,
+	[PERSONELADSOYAD] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PERSONELID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Nesnesi: Table [dbo].[TBLMUSTERI] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLMUSTERI](
+	[MUSTERIID] [int] IDENTITY(1,1) NOT NULL,
+	[MUSTERIAD] [varchar](50) NULL,
+	[MUSTERISOYAD] [varchar](50) NULL,
+	[MUSTERISEHIR] [varchar](13) NULL,
+	[MUSTERIBAKIYE] [decimal](18, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MUSTERIID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Nesnesi: Table [dbo].[TBLHAREKET] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLHAREKET](
+	[HAREKETID] [int] IDENTITY(1,1) NOT NULL,
+	[URUN] [int] NULL,
+	[MUSTERİ] [int] NULL,
+	[PERSONEL] [smallint] NULL,
+	[ADET] [int] NULL,
+	[TUTAR] [decimal](18, 2) NULL,
+	[TARIH] [smalldatetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[HAREKETID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Nesnesi: View [dbo].[TEST3] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE VIEW [dbo].[TEST3]
+AS
+SELECT dbo.TBLURUNLER.URUNAD, dbo.TBLMUSTERI.MUSTERIAD, dbo.TBLMUSTERI.MUSTERISOYAD, dbo.TBLPERSONEL.PERSONELADSOYAD, dbo.TBLHAREKET.ADET, dbo.TBLHAREKET.TUTAR, dbo.TBLHAREKET.TARIH
+FROM     dbo.TBLHAREKET INNER JOIN
+                  dbo.TBLURUNLER ON dbo.TBLHAREKET.URUN = dbo.TBLURUNLER.URUNID INNER JOIN
+                  dbo.TBLPERSONEL ON dbo.TBLHAREKET.PERSONEL = dbo.TBLPERSONEL.PERSONELID INNER JOIN
+                  dbo.TBLMUSTERI ON dbo.TBLHAREKET.MUSTERİ = dbo.TBLMUSTERI.MUSTERIID
+WHERE  (dbo.TBLHAREKET.ADET > 1)
+GO
+/****** Nesnesi: Table [dbo].[TBLKASA] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLKASA](
+	[TOPLAM] [decimal](18, 2) NULL
+) ON [PRIMARY]
+GO
+/****** Nesnesi: Table [dbo].[TBLSAYAC] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLSAYAC](
+	[ISLEM] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Nesnesi: Table [dbo].[TBLTOPLAMKATEGORI] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TBLTOPLAMKATEGORI](
+	[ADET] [tinyint] NULL
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[TBLURUNLER] ADD  DEFAULT ('1') FOR [URUNDURUM]
+GO
+ALTER TABLE [dbo].[TBLHAREKET]  WITH CHECK ADD  CONSTRAINT [FK_TBLHAREKET_TBLMUSTERI] FOREIGN KEY([MUSTERİ])
+REFERENCES [dbo].[TBLMUSTERI] ([MUSTERIID])
+GO
+ALTER TABLE [dbo].[TBLHAREKET] CHECK CONSTRAINT [FK_TBLHAREKET_TBLMUSTERI]
+GO
+ALTER TABLE [dbo].[TBLHAREKET]  WITH CHECK ADD  CONSTRAINT [FK_TBLHAREKET_TBLPERSONEL] FOREIGN KEY([PERSONEL])
+REFERENCES [dbo].[TBLPERSONEL] ([PERSONELID])
+GO
+ALTER TABLE [dbo].[TBLHAREKET] CHECK CONSTRAINT [FK_TBLHAREKET_TBLPERSONEL]
+GO
+ALTER TABLE [dbo].[TBLHAREKET]  WITH CHECK ADD  CONSTRAINT [FK_TBLHAREKET_TBLURUNLER] FOREIGN KEY([URUN])
+REFERENCES [dbo].[TBLURUNLER] ([URUNID])
+GO
+ALTER TABLE [dbo].[TBLHAREKET] CHECK CONSTRAINT [FK_TBLHAREKET_TBLURUNLER]
+GO
+ALTER TABLE [dbo].[TBLURUNLER]  WITH CHECK ADD  CONSTRAINT [FK_TBLURUNLER_TBLKATEGORI] FOREIGN KEY([KATEGORI])
+REFERENCES [dbo].[TBLKATEGORI] ([KATEGORIID])
+GO
+ALTER TABLE [dbo].[TBLURUNLER] CHECK CONSTRAINT [FK_TBLURUNLER_TBLKATEGORI]
+GO
+ALTER TABLE [dbo].[TBLURUNLER]  WITH CHECK ADD CHECK  (([URUNSTOK]>(0)))
+GO
+/****** Nesnesi: StoredProcedure [dbo].[HAREKETLER] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--create database SatisVT
+--use SatisVT
+--Create Table TBLKATEGORI  
+
+--(
+--KATEGORIID tinyint IDENTITY (1,1) PRIMARY KEY,
+--KATEGORIAD varchar (50) 
+--)
+--Create Table TBLURUNLER
+--(
+--URUNID int identity(1,1) primary key,
+--URUNAD varchar(50),
+--URUNMARKA varchar(50),
+--KATEGORI tinyint, 
+--URUNALISFIYAT decimal (18,2),
+--URUNSATISFIYAT decimal (18,2),
+--URUNSTOK smallint check(URUNSTOK>0),
+--URUNDURUM bit default '1'  
+--)
+
+--create table TBLPERSONEL 
+--(
+--PERSONELID smallint identity (1,1) primary key,
+--PERSONELADSOYAD varchar (50),
+
+
+--)
+
+--create table TBLMUSTERI
+--(
+--MUSTERIID int identity (1,1) primary key,
+--MUSTERIAD varchar(50),
+--MUSTERISOYAD varchar(50),
+--MUSTERISEHIR varchar(13),
+--MUSTERIBAKIYE decimal (18,2),
+--)
+
+--create table TBLHAREKET
+--(
+--HAREKETID int primary key identity(1,1),
+--URUN int,
+--MUSTERİ int,
+--PERSONEL smallint,
+--ADET int,
+--TUTAR decimal (18,2),
+--TARIH datetime 
+--)
+
+--truncate table TBLURUNLER
+
+--insert into TBLKATEGORI (KATEGORIAD) values ('Bilgisayar')
+--insert into TBLKATEGORI (KATEGORIAD) values ('Beyaz Eşya')
+--insert into TBLKATEGORI (KATEGORIAD) values ('Küçük Ev Aleti')
+--insert into TBLKATEGORI (KATEGORIAD) values ('TV')
+
+--insert into TBLURUNLER (URUNAD,URUNMARKA,KATEGORI,URUNALISFIYAT,URUNSATISFIYAT,URUNSTOK)
+--values ('Buzdolabı', 'Siemens',2,4356,4588,10)
+
+--select KATEGORIAD, count(*)as 'TOPLAM ÜRÜN' from TBLURUNLER inner join TBLKATEGORI
+--ON TBLURUNLER.KATEGORI= TBLKATEGORI.KATEGORIID group by KATEGORIAD ORDER BY COUNT (*)
+
+--kategorı adı bılgısayar olan urunlerın satıs fıyatına 500 tl zam yapma
+--update TBLURUNLER set URUNSATISFIYAT+=500 where KATEGORI=(select KATEGORIID FROM TBLKATEGORI 
+--WHERE KATEGORIAD='Bilgisayar')
+--select * from TBLURUNLER
+-- odev: TV KATEGORISINDEKI URUNLERE %10 INDIRIM ODEVI
+--update TBLURUNLER set URUNSATISFIYAT*=0.9 where KATEGORI=(select KATEGORIID from TBLKATEGORI
+--where KATEGORIAD='TV')
+
+--select count(*) as 'Kaç Farklı Ürün', sum(URUNSTOK) as 'Stok Sayısı'  from TBLURUNLER
+
+--Select * from TBLURUNLER
+
+--select URUNID,URUNAD,URUNMARKA,KATEGORIAD,URUNSATISFIYAT,URUNALISFIYAT,URUNSTOK,
+--(URUNSATISFIYAT-URUNALISFIYAT) AS 'KÂR' ,(URUNSATISFIYAT-URUNALISFIYAT)*URUNSTOK 
+--AS 'TOPLAM KÂR'
+--FROM TBLURUNLER INNER JOIN TBLKATEGORI
+--ON TBLURUNLER.KATEGORI=TBLKATEGORI.KATEGORIID
+
+--CREATE PROCEDURE HAREKETLER
+--AS
+--select HAREKETID,URUNAD,MUSTERIAD + '' + MUSTERISOYAD AS 'AD SOYAD',
+--PERSONELADSOYAD,TUTAR,TARIH
+--from TBLHAREKET inner join TBLURUNLER 
+--on TBLHAREKET.URUN=TBLURUNLER.URUNID
+--inner join TBLMUSTERI 
+--on TBLHAREKET.MUSTERİ=TBLMUSTERI.MUSTERIID
+--INNER JOIN TBLPERSONEL 
+--on TBLHAREKET.PERSONEL = TBLPERSONEL.PERSONELID
+
+--execute HAREKETLER
+
+CREATE PROCEDURE [dbo].[HAREKETLER]
+AS
+select HAREKETID,URUNAD,LEFT(MUSTERIAD,1) + '' + MUSTERISOYAD AS 'AD SOYAD',
+PERSONELADSOYAD,TUTAR,TARIH
+from TBLHAREKET inner join TBLURUNLER 
+on TBLHAREKET.URUN=TBLURUNLER.URUNID
+inner join TBLMUSTERI 
+on TBLHAREKET.MUSTERİ=TBLMUSTERI.MUSTERIID
+INNER JOIN TBLPERSONEL 
+ON TBLHAREKET.PERSONEL = TBLPERSONEL.PERSONELID
+EXEC HAREKETLER 
+GO
+/****** Nesnesi: StoredProcedure [dbo].[TEST4] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+--Declare @Sayi int 
+--set @Sayi=24
+--select @Sayi as 'Sonuç'
+
+--Declare @Kisi1 varchar(20) 
+--Set @Kisi1= 'Kuntay'
+--Select @Kisi1
+
+--Declare @Sayi1 int, @Sayi2 int, @Toplam int
+--set @Sayi1=20 
+--set @Sayi2=30
+--set @Toplam = @Sayi1+@Sayi2
+--select @Toplam as 'Sonuç'
+
+--Declare @Ogrencinot1 decimal(5,2), @Ogrencinot2 decimal(5,2), @Ogrencinot3 decimal(5,2), @Ogrenciortalama decimal(5,2)
+--set @Ogrencinot1=60 
+--set @Ogrencinot2=70
+--set @Ogrencinot3=55 
+--set @Ogrenciortalama=  (@Ogrencinot1+@Ogrencinot2+@Ogrencinot3)/3
+--select @Ogrenciortalama as 'Sonuç'
+
+----basamakları sayı gibi toplayacak kod  
+-- declare @sayi int, @birler int, @onlar int, @yuzler int, @toplam int 
+-- set @sayi=456  
+-- set @birler=@sayi % 10 
+-- set @onlar=(@sayi/10)%10
+--  set @yuzler=@sayi/100
+-- select @birler, @onlar, @yuzler 
+-- set @toplam=@birler+@onlar+@yuzler
+-- select @toplam as 'Sonuç'
+
+----use SatisVT 
+----select * from TBLMUSTERI
+--DECLARE @Bakiye int 
+--set @Bakiye= (select max(MUSTERIBAKIYE) from TBLMUSTERI)
+--SELECT @Bakiye
+
+--SELECT * from TBLURUNLER 
+--declare @stok int 
+--select @stok= max(urunstok) from TBLURUNLER
+--select * from TBLURUNLER where URUNSTOK=@stok 
+
+--use SatisVT
+--Print 'Merhaba'
+
+--declare @Kisiler table
+--(
+--KisiID int IDENTITY(1,1) ,
+--KisiAd Varchar(10),
+--KisiSehir varchar (15) 
+--)
+--insert into @Kisiler (KisiAd,KisiSehir) values ('Ali', 'Malatya')
+--insert into @Kisiler  (KisiAd,KisiSehir) values ('Temel', 'Trabzon')
+--Select * from @Kisiler where KisiSehir like '%r%'
+
+----Select * from TBLURUNLER 
+--if(select Sum(UrunStok) From TBLURUNLER) > 100
+--print 'Toplam Ürün Sayısı 100den Büyük' 
+--else 
+--print 'Toplam Ürün Sayısı 100den Küçük'
+
+--select URUNAD, URUNMARKA, URUNDURUM =
+--CASE URUNDURUM
+--WHEN '1' THEN 'ÜRÜN VAR'
+--WHEN'0' THEN 'ÜRÜN YOK' 
+--END
+--from TBLURUNLER 
+
+--SELECT URUNAD, URUNMARKA,KATEGORI=
+--CASE KATEGORI 
+--WHEN '1' THEN 'LAPTOP'
+--WHEN '2' THEN 'BEYAZ EŞYA'
+--WHEN '3' THEN 'KÜÇÜK EV ALETİ'
+--END
+--FROM TBLURUNLER 
+
+CREATE PROCEDURE [dbo].[TEST4]
+AS
+SELECT URUNAD, URUNMARKA, URUNSTOK, URUNSTOK=
+CASE 
+WHEN URUNSTOK>=1 AND URUNSTOK <=5 THEN 'KRİTİK SEVİYE'
+WHEN URUNSTOK>=6 AND URUNSTOK <=10 THEN 'TAKVİYE GEREK'
+WHEN URUNSTOK>10 THEN 'ÜRÜN STOK SAYISI YETERLİ'
+END
+FROM TBLURUNLER
+GO
+/****** Nesnesi: StoredProcedure [dbo].[URUNGETIR] Betik Tarihi: 15.06.2026 17:52:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+----create database SatisVT
+----use SatisVT
+----Create Table TBLKATEGORI  
+
+----(
+----KATEGORIID tinyint IDENTITY (1,1) PRIMARY KEY,
+----KATEGORIAD varchar (50) 
+----)
+----Create Table TBLURUNLER
+----(
+----URUNID int identity(1,1) primary key,
+----URUNAD varchar(50),
+----URUNMARKA varchar(50),
+----KATEGORI tinyint, 
+----URUNALISFIYAT decimal (18,2),
+----URUNSATISFIYAT decimal (18,2),
+----URUNSTOK smallint check(URUNSTOK>0),
+----URUNDURUM bit default '1'  
+----)
+
+----create table TBLPERSONEL 
+----(
+----PERSONELID smallint identity (1,1) primary key,
+----PERSONELADSOYAD varchar (50),
+
+
+----)
+
+----create table TBLMUSTERI
+----(
+----MUSTERIID int identity (1,1) primary key,
+----MUSTERIAD varchar(50),
+----MUSTERISOYAD varchar(50),
+----MUSTERISEHIR varchar(13),
+----MUSTERIBAKIYE decimal (18,2),
+----)
+
+----create table TBLHAREKET
+----(
+----HAREKETID int primary key identity(1,1),
+----URUN int,
+----MUSTERİ int,
+----PERSONEL smallint,
+----ADET int,
+----TUTAR decimal (18,2),
+----TARIH datetime 
+----)
+
+----truncate table TBLURUNLER
+
+----insert into TBLKATEGORI (KATEGORIAD) values ('Bilgisayar')
+----insert into TBLKATEGORI (KATEGORIAD) values ('Beyaz Eşya')
+----insert into TBLKATEGORI (KATEGORIAD) values ('Küçük Ev Aleti')
+----insert into TBLKATEGORI (KATEGORIAD) values ('TV')
+
+----insert into TBLURUNLER (URUNAD,URUNMARKA,KATEGORI,URUNALISFIYAT,URUNSATISFIYAT,URUNSTOK)
+----values ('Buzdolabı', 'Siemens',2,4356,4588,10)
+
+----select KATEGORIAD, count(*)as 'TOPLAM ÜRÜN' from TBLURUNLER inner join TBLKATEGORI
+----ON TBLURUNLER.KATEGORI= TBLKATEGORI.KATEGORIID group by KATEGORIAD ORDER BY COUNT (*)
+
+----kategorı adı bılgısayar olan urunlerın satıs fıyatına 500 tl zam yapma
+----update TBLURUNLER set URUNSATISFIYAT+=500 where KATEGORI=(select KATEGORIID FROM TBLKATEGORI 
+----WHERE KATEGORIAD='Bilgisayar')
+----select * from TBLURUNLER
+---- odev: TV KATEGORISINDEKI URUNLERE %10 INDIRIM ODEVI
+----update TBLURUNLER set URUNSATISFIYAT*=0.9 where KATEGORI=(select KATEGORIID from TBLKATEGORI
+----where KATEGORIAD='TV')
+
+----select count(*) as 'Kaç Farklı Ürün', sum(URUNSTOK) as 'Stok Sayısı'  from TBLURUNLER
+
+----Select * from TBLURUNLER
+
+----select URUNID,URUNAD,URUNMARKA,KATEGORIAD,URUNSATISFIYAT,URUNALISFIYAT,URUNSTOK,
+----(URUNSATISFIYAT-URUNALISFIYAT) AS 'KÂR' ,(URUNSATISFIYAT-URUNALISFIYAT)*URUNSTOK 
+----AS 'TOPLAM KÂR'
+----FROM TBLURUNLER INNER JOIN TBLKATEGORI
+----ON TBLURUNLER.KATEGORI=TBLKATEGORI.KATEGORIID
+
+----CREATE PROCEDURE HAREKETLER
+----AS
+----select HAREKETID,URUNAD,MUSTERIAD + '' + MUSTERISOYAD AS 'AD SOYAD',
+----PERSONELADSOYAD,TUTAR,TARIH
+----from TBLHAREKET inner join TBLURUNLER 
+----on TBLHAREKET.URUN=TBLURUNLER.URUNID
+----inner join TBLMUSTERI 
+----on TBLHAREKET.MUSTERİ=TBLMUSTERI.MUSTERIID
+----INNER JOIN TBLPERSONEL 
+----on TBLHAREKET.PERSONEL = TBLPERSONEL.PERSONELID
+
+----execute HAREKETLER
+
+----ALTER PROCEDURE [dbo].[HAREKETLER]
+----AS
+----select HAREKETID,URUNAD,LEFT(MUSTERIAD,1) + '' + MUSTERISOYAD AS 'AD SOYAD',
+----PERSONELADSOYAD,TUTAR,TARIH
+----from TBLHAREKET inner join TBLURUNLER 
+----on TBLHAREKET.URUN=TBLURUNLER.URUNID
+----inner join TBLMUSTERI 
+----on TBLHAREKET.MUSTERİ=TBLMUSTERI.MUSTERIID
+----INNER JOIN TBLPERSONEL 
+----ON TBLHAREKET.PERSONEL = TBLPERSONEL.PERSONELID
+CREATE Procedure [dbo].[URUNGETIR]
+@Deger varchar(50)='Buzdolabı'
+as 
+SELECT URUNAD,URUNSTOK,URUNMARKA FROM TBLURUNLER
+where URUNAD=@Deger 
+
+--EXECUTE URUNGETIR 
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "TBLKATEGORI"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 126
+               Right = 250
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'TEST1'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'TEST1'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "TBLURUNLER"
+            Begin Extent = 
+               Top = 7
+               Left = 48
+               Bottom = 170
+               Right = 258
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TBLKATEGORI"
+            Begin Extent = 
+               Top = 30
+               Left = 493
+               Bottom = 149
+               Right = 695
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+      Begin ColumnWidths = 9
+         Width = 284
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+         Width = 1500
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'TEST2'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'TEST2'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]
+Begin DesignProperties = 
+   Begin PaneConfigurations = 
+      Begin PaneConfiguration = 0
+         NumPanes = 4
+         Configuration = "(H (1[40] 4[20] 2[20] 3) )"
+      End
+      Begin PaneConfiguration = 1
+         NumPanes = 3
+         Configuration = "(H (1 [50] 4 [25] 3))"
+      End
+      Begin PaneConfiguration = 2
+         NumPanes = 3
+         Configuration = "(H (1 [50] 2 [25] 3))"
+      End
+      Begin PaneConfiguration = 3
+         NumPanes = 3
+         Configuration = "(H (4 [30] 2 [40] 3))"
+      End
+      Begin PaneConfiguration = 4
+         NumPanes = 2
+         Configuration = "(H (1 [56] 3))"
+      End
+      Begin PaneConfiguration = 5
+         NumPanes = 2
+         Configuration = "(H (2 [66] 3))"
+      End
+      Begin PaneConfiguration = 6
+         NumPanes = 2
+         Configuration = "(H (4 [50] 3))"
+      End
+      Begin PaneConfiguration = 7
+         NumPanes = 1
+         Configuration = "(V (3))"
+      End
+      Begin PaneConfiguration = 8
+         NumPanes = 3
+         Configuration = "(H (1[56] 4[18] 2) )"
+      End
+      Begin PaneConfiguration = 9
+         NumPanes = 2
+         Configuration = "(H (1 [75] 4))"
+      End
+      Begin PaneConfiguration = 10
+         NumPanes = 2
+         Configuration = "(H (1[66] 2) )"
+      End
+      Begin PaneConfiguration = 11
+         NumPanes = 2
+         Configuration = "(H (4 [60] 2))"
+      End
+      Begin PaneConfiguration = 12
+         NumPanes = 1
+         Configuration = "(H (1) )"
+      End
+      Begin PaneConfiguration = 13
+         NumPanes = 1
+         Configuration = "(V (4))"
+      End
+      Begin PaneConfiguration = 14
+         NumPanes = 1
+         Configuration = "(V (2))"
+      End
+      ActivePaneConfig = 0
+   End
+   Begin DiagramPane = 
+      Begin Origin = 
+         Top = 0
+         Left = 0
+      End
+      Begin Tables = 
+         Begin Table = "TBLHAREKET"
+            Begin Extent = 
+               Top = 18
+               Left = 312
+               Bottom = 181
+               Right = 514
+            End
+            DisplayFlags = 280
+            TopColumn = 3
+         End
+         Begin Table = "TBLURUNLER"
+            Begin Extent = 
+               Top = 46
+               Left = 30
+               Bottom = 209
+               Right = 240
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TBLPERSONEL"
+            Begin Extent = 
+               Top = 146
+               Left = 643
+               Bottom = 265
+               Right = 877
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+         Begin Table = "TBLMUSTERI"
+            Begin Extent = 
+               Top = 0
+               Left = 924
+               Bottom = 163
+               Right = 1127
+            End
+            DisplayFlags = 280
+            TopColumn = 0
+         End
+      End
+   End
+   Begin SQLPane = 
+   End
+   Begin DataPane = 
+      Begin ParameterDefaults = ""
+      End
+   End
+   Begin CriteriaPane = 
+      Begin ColumnWidths = 11
+         Column = 1440
+         Alias = 900
+         Table = 1170
+         Output = 720
+         Append = 1400
+         NewValue = 1170
+         SortType = 1350
+         SortOrder = 1410
+         GroupBy = 1350
+         Filter = 1350
+         Or = 1350
+         Or = 1350
+         Or = 1350
+      End
+   End
+End
+' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'TEST3'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPaneCount', @value=1 , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'VIEW',@level1name=N'TEST3'
+GO
+USE [master]
+GO
+ALTER DATABASE [SatisVT] SET  READ_WRITE 
+GO
